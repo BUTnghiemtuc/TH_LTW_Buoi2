@@ -32,7 +32,7 @@ function UserPhotos() {
     return <Typography variant="body1" sx={{ m: 2 }}>Không có ảnh nào.</Typography>;
   }
 
-  // 🟡 Nếu advanced feature bật: chỉ hiển thị 1 ảnh
+  // Nếu advanced feature bật: chỉ hiển thị 1 ảnh
   if (advancedEnabled) {
     const photo = photos[index];
 
@@ -95,7 +95,7 @@ function UserPhotos() {
     );
   }
 
-  // 🔵 Nếu advanced feature tắt: hiển thị toàn bộ ảnh
+  // Nếu advanced feature tắt: hiển thị toàn bộ ảnh
   return (
     <div className="photo-list">
       {photos.map((photo) => (

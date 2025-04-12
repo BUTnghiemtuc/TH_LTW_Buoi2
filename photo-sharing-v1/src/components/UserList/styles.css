@@ -1,0 +1,18 @@
+.user-list-container {
+    padding: 16px;
+    font-family: "Segoe UI", sans-serif;
+  }
+  
+  .user-list-item {
+    transition: background 0.3s ease;
+  }
+  
+  .user-list-item:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .active-user {
+    background-color: #e3f2fd;
+    font-weight: bold;
+  }
+  

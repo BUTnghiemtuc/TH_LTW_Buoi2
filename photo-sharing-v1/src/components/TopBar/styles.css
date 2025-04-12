@@ -1,4 +1,7 @@
 .topbar-appBar {
   height: 60;
   justify-content: "center";
+  background: linear-gradient(90deg, #1976d2, #42a5f5);
+  padding: 6px 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
