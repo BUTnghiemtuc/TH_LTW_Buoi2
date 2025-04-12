@@ -1,45 +1,46 @@
-import React, { useEffect, useState } from "react";
-import { AppBar, Toolbar, Typography, Box } from "@mui/material";
-import { useLocation, useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { AppBar, Toolbar, Typography, Checkbox, FormControlLabel } from "@mui/material";
+import { useLocation } from "react-router-dom";
 import models from "../../modelData/models";
-
+import { AdvancedFeatureContext } from "../../contexts/AdvancedFeatureContext";
 import "./styles.css";
 
 function TopBar() {
   const location = useLocation();
-  const { userId } = useParams();
-
   const [contextText, setContextText] = useState("");
 
-  useEffect(() => {
-    const path = location.pathname;
+  const { advancedEnabled, setAdvancedEnabled } = useContext(AdvancedFeatureContext);
 
-    if (path.startsWith("/users/") && !path.startsWith("/users/") + "undefined") {
-      const user = models.userModel(userId);
-      if (user) {
-        setContextText(`${user.first_name} ${user.last_name}`);
-      }
-    } else if (path.startsWith("/photos/")) {
-      const user = models.userModel(userId);
-      if (user) {
-        setContextText(`Photos of ${user.first_name} ${user.last_name}`);
-      }
+  useEffect(() => {
+    const pathParts = location.pathname.split("/");
+    if (location.pathname.startsWith("/users/") && pathParts.length >= 3) {
+      const user = models.userModel(pathParts[2]);
+      if (user) setContextText(`${user.first_name} ${user.last_name}`);
+    } else if (location.pathname.startsWith("/photos/") && pathParts.length >= 3) {
+      const user = models.userModel(pathParts[2]);
+      if (user) setContextText(`Photos of ${user.first_name} ${user.last_name}`);
     } else {
       setContextText("");
     }
-  }, [location, userId]);
+  }, [location]);
 
   return (
-    <AppBar className="topbar-appBar" position="absolute">
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        
-        <Typography variant="h6" color="inherit">
-          Nguyễn Trọng Khởi
-        </Typography>
-
-        <Typography variant="h6" color="inherit">
-          {contextText}
-        </Typography>
+    <AppBar position="absolute">
+      <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography variant="h6">Nguyễn Trọng Khởi</Typography>
+        <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+          <Typography variant="h6">{contextText}</Typography>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={advancedEnabled}
+                onChange={(e) => setAdvancedEnabled(e.target.checked)}
+                color="default"
+              />
+            }
+            label="Enable Advanced Features"
+          />
+        </div>
       </Toolbar>
     </AppBar>
   );
